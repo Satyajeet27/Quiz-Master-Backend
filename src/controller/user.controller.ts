@@ -56,7 +56,8 @@ export const loginUser = async (req: Request, res: Response) => {
       .cookie("token", token, {
         httpOnly: true,
         domain,
-        sameSite: "lax",
+        sameSite: "none",
+        secure: true,
       })
       .send({ message: "Logged in successfull", token });
   } catch (error) {

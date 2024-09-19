@@ -50,11 +50,13 @@ export const loginUser = async (req: Request, res: Response) => {
     }
     const payload = { sub: user._id, email };
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY as string);
+    const domain = process.env.CLIENT?.split("//").at(-1);
     return res
       .status(200)
       .cookie("token", token, {
         httpOnly: true,
-        sameSite: "strict",
+        domain,
+        sameSite: "lax",
       })
       .send({ message: "Logged in successfull", token });
   } catch (error) {

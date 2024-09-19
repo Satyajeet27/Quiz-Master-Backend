@@ -21,7 +21,7 @@ export const createStudent = async (req: Request, res: Response) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY as string);
     return res
       .status(201)
-      .cookie("exam_session", token, { httpOnly: true, sameSite: "strict" })
+      .cookie("exam_session", token, { httpOnly: true, secure: true })
       .send({ message: "student profile created" });
   } catch (error) {
     console.log(error);

@@ -21,7 +21,11 @@ export const createStudent = async (req: Request, res: Response) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY as string);
     return res
       .status(201)
-      .cookie("exam_session", token, { httpOnly: true, secure: true })
+      .cookie("exam_session", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
       .send({ message: "student profile created" });
   } catch (error) {
     console.log(error);
@@ -95,15 +99,6 @@ export const submitAnswer = async (req: Request, res: Response) => {
       .status(500)
       .send({ message: "Something went wrong with submitAnswer api" });
   }
-};
-
-type AnswerType = {
-  answer: string;
-  questionId: {
-    correctAnswer: string;
-    questionText: string;
-    _id: string;
-  };
 };
 
 export const studentAnswer = async (req: Request, res: Response) => {
